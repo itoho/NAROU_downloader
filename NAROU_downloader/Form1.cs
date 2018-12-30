@@ -156,10 +156,11 @@ namespace NAROU_downloader
                 //Wasuu_text.Text = data.TextContent;
 
                 var auther_Text = doc.QuerySelector(".novel_writername");
-                var ffname=urlstring.Substring(urlstring.IndexOf(".com/")+4,7);
+                var ffname=urlstring.Substring(urlstring.IndexOf(".com/")+5,7);
                 await Task.Delay(2000);
+                Console.WriteLine(ffname + "OK");
                 WiteFile(honbun,ffname+syou.ToString(),comboBox1.SelectedIndex);
-                Console.WriteLine("aa");
+                
                 
             }
 
