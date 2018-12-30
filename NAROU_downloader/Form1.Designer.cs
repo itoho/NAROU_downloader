@@ -41,6 +41,11 @@
             this.Wasuu_text = new System.Windows.Forms.TextBox();
             this.datasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Dl_button = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.datasBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -146,11 +151,69 @@
             this.dataGridView1.Size = new System.Drawing.Size(547, 264);
             this.dataGridView1.TabIndex = 10;
             // 
+            // Dl_button
+            // 
+            this.Dl_button.Location = new System.Drawing.Point(511, 450);
+            this.Dl_button.Name = "Dl_button";
+            this.Dl_button.Size = new System.Drawing.Size(96, 23);
+            this.Dl_button.TabIndex = 11;
+            this.Dl_button.Text = "ダウンロード";
+            this.Dl_button.UseVisualStyleBackColor = true;
+            this.Dl_button.Click += new System.EventHandler(this.Dl_button_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.ItemHeight = 12;
+            this.comboBox1.Items.AddRange(new object[] {
+            "s-jis(jis)",
+            "UTF-8"});
+            this.comboBox1.Location = new System.Drawing.Point(120, 452);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(83, 20);
+            this.comboBox1.TabIndex = 12;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(58, 455);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 12);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "文字コード";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(219, 455);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(0, 12);
+            this.label6.TabIndex = 14;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.ItemHeight = 12;
+            this.comboBox2.Items.AddRange(new object[] {
+            "すべてダウンロード",
+            "選択範囲のみダウンロード"});
+            this.comboBox2.Location = new System.Drawing.Point(221, 452);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(161, 20);
+            this.comboBox2.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 535);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.Dl_button);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.Wasuu_text);
             this.Controls.Add(this.label4);
@@ -186,6 +249,11 @@
         private System.Windows.Forms.TextBox Wasuu_text;
         private System.Windows.Forms.BindingSource datasBindingSource;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button Dl_button;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }
 
