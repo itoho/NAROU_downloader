@@ -94,7 +94,7 @@ namespace NAROU_downloader
            // public string Yobi1 { get; set; }
         }
 
-        private void Dl_button_Click(object sender, EventArgs e)
+        private async void Dl_button_Click(object sender, EventArgs e)
         {
             if (comboBox2.SelectedIndex == 1)
             {
@@ -116,12 +116,14 @@ namespace NAROU_downloader
             if (comboBox2.SelectedIndex == 0)
             {
                 int[] array = new int[Int32.Parse(Wasuu_text.Text)];
+                progressBar1.Maximum = array.Length+1;
                 for (int i = 0; i < array.Length; i++)
                 {
                     array[i] = i;
-                    
+                    await Task.Delay(800);
                     downloadmethod(i+1,i);
                 }
+                progressBar1.Value = 0;
             }
 
 
@@ -160,7 +162,7 @@ namespace NAROU_downloader
                 await Task.Delay(2000);
                 Console.WriteLine(ffname + "OK");
                 WiteFile(honbun,ffname+syou.ToString(),comboBox1.SelectedIndex);
-                
+                progressBar1.Value += 1;
                 
             }
 
