@@ -111,7 +111,17 @@ namespace NAROU_downloader
 
 
                 }
-                downloadmethod(2, 1);
+                Array.Sort(array);
+                progressBar1.Maximum = array.Length + 1;
+                for (int k = 0; k < array.Length; k++)
+                {
+                    await Task.Delay(600);
+                    Console.WriteLine(array[k]);
+                    downloadmethod(array[k] + 1, array[k]);
+
+                }
+                await Task.Delay(3200);
+                progressBar1.Value = 0;
             }
             if (comboBox2.SelectedIndex == 0)
             {
@@ -123,6 +133,8 @@ namespace NAROU_downloader
                     await Task.Delay(800);
                     downloadmethod(i+1,i);
                 }
+                await Task.Delay(3200);
+
                 progressBar1.Value = 0;
             }
 
