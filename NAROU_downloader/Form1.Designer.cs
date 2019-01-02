@@ -48,6 +48,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.datasBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -150,12 +151,12 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(547, 264);
+            this.dataGridView1.Size = new System.Drawing.Size(547, 292);
             this.dataGridView1.TabIndex = 10;
             // 
             // Dl_button
             // 
-            this.Dl_button.Location = new System.Drawing.Point(511, 450);
+            this.Dl_button.Location = new System.Drawing.Point(511, 457);
             this.Dl_button.Name = "Dl_button";
             this.Dl_button.Size = new System.Drawing.Size(96, 23);
             this.Dl_button.TabIndex = 11;
@@ -171,7 +172,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "s-jis(jis)",
             "UTF-8"});
-            this.comboBox1.Location = new System.Drawing.Point(120, 452);
+            this.comboBox1.Location = new System.Drawing.Point(120, 459);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(83, 20);
             this.comboBox1.TabIndex = 12;
@@ -179,7 +180,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(58, 455);
+            this.label5.Location = new System.Drawing.Point(58, 462);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 12);
             this.label5.TabIndex = 13;
@@ -188,7 +189,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(219, 455);
+            this.label6.Location = new System.Drawing.Point(219, 462);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(0, 12);
             this.label6.TabIndex = 14;
@@ -201,23 +202,34 @@
             this.comboBox2.Items.AddRange(new object[] {
             "すべてダウンロード",
             "選択範囲のみダウンロード"});
-            this.comboBox2.Location = new System.Drawing.Point(221, 452);
+            this.comboBox2.Location = new System.Drawing.Point(221, 459);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(161, 20);
             this.comboBox2.TabIndex = 15;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(60, 478);
+            this.progressBar1.Location = new System.Drawing.Point(60, 485);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(549, 12);
             this.progressBar1.TabIndex = 16;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(60, 503);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(547, 23);
+            this.button2.TabIndex = 17;
+            this.button2.Text = "フォルダを開く";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 535);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label6);
@@ -266,6 +278,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

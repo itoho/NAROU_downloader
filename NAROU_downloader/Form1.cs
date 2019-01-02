@@ -190,5 +190,10 @@ namespace NAROU_downloader
             sw.Write(text);
             sw.Close();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("EXPLORER.EXE", "Downloads");
+        }
     }
 }
