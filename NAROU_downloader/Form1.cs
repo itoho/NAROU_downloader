@@ -112,7 +112,7 @@ namespace NAROU_downloader
 
                 }
                 Array.Sort(array);
-                progressBar1.Maximum = array.Length + 1;
+                progressBar1.Maximum = array.Length ;
                 for (int k = 0; k < array.Length; k++)
                 {
                     await Task.Delay(600);
@@ -126,7 +126,7 @@ namespace NAROU_downloader
             if (comboBox2.SelectedIndex == 0)
             {
                 int[] array = new int[Int32.Parse(Wasuu_text.Text)];
-                progressBar1.Maximum = array.Length+1;
+                progressBar1.Maximum = array.Length;
                 for (int i = 0; i < array.Length; i++)
                 {
                     array[i] = i;
@@ -185,7 +185,8 @@ namespace NAROU_downloader
 
             if (enc == 0) enco = "shift-jis";
             if (enc == 1) enco = "utf-8";
-            StreamWriter sw = new StreamWriter(fname+".txt", false, Encoding.GetEncoding("shift_jis"));
+            text.Replace("\n", "\r\n");
+            StreamWriter sw = new StreamWriter("Downloads\\" + fname+".txt", false, Encoding.GetEncoding("shift_jis"));
             sw.Write(text);
             sw.Close();
         }
