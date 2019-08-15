@@ -161,11 +161,17 @@ namespace NAROU_downloader
                 }
 
                 // HTMLからtitleタグの値(サイトのタイトルとして表示される部分)を取得する
-                
-                //var a = doc.GetElementsByClassName("novel_writername");("#container > #novel_contents > #novel_color > #novel_writername  a");
-                var Texti = doc.QuerySelectorAll(".novel_view");
-                var honbun=Texti[0].TextContent;
 
+                //var a = doc.GetElementsByClassName("novel_writername");("#container > #novel_contents > #novel_color > #novel_writername  a");
+                var midasi = doc.QuerySelector(".novel_subtitle");
+                var Texti = doc.QuerySelectorAll(".novel_view");
+                //var honbun = Texti[0].TextContent;
+                string honbun = "";
+                honbun = midasi.TextContent+ "\n\n\n";
+                for(int i=0;i< Texti.Length;i++)
+                {
+                    honbun += Texti[i].TextContent;
+                }
 
                 //Wasuu_text.Text = data.TextContent;
 
