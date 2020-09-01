@@ -1,7 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NAROU_downloader.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="bridge_home" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://192.168.0.10/physics/agent/narou_get.php?URL=</Value>
+    </Setting>
+    <Setting Name="bridge_school" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://itoho.wjg.jp/physics/agent/narou_get.php?URL=</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
