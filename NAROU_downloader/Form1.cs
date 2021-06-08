@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,8 @@ namespace NAROU_downloader
 {
     public partial class Form1 : Form
     {
+
+        System.Diagnostics.Process p = null;//関連するアプリケーションのKILL用
         public Form1()
         {
             InitializeComponent();
@@ -165,7 +168,7 @@ namespace NAROU_downloader
 
 
         }
-        public async void downloadmethod(int syou,int mode)
+        public async Task downloadmethod(int syou,int mode)
         {
 
             var urlstring = Linkbox.Text+syou+"/";
@@ -212,7 +215,6 @@ namespace NAROU_downloader
 
                 var auther_Text = doc.QuerySelector(".novel_writername");
                 var ffname=urlstring.Substring(urlstring.IndexOf(".com/")+5,7);
-                //await Task.Delay(2000);
                 Console.WriteLine(ffname + "OK");
                 WiteFile(honbun,ffname+syou.ToString(),comboBox1.SelectedIndex);
                 progressBar1.Value += 1;
@@ -252,7 +254,7 @@ namespace NAROU_downloader
             }
         }
 
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView1_CellContentDoubleClickAsync(object sender, DataGridViewCellEventArgs e)
         {
             var urlstring = Linkbox.Text + (e.RowIndex+1) + "/";
             var ffname = urlstring.Substring(urlstring.IndexOf(".com/") + 5, 7);
@@ -268,23 +270,55 @@ namespace NAROU_downloader
             */
             //MessageBox.Show(messageBoxCS.ToString(), "CellDoubleClick Event");
             
-            if (File.Exists("Downloads\\" + Title_text.Text + "\\" + ffname + (e.RowIndex + 1) + ".txt"))
+            if (!(File.Exists("Downloads\\" + Title_text.Text + "\\" + ffname + (e.RowIndex + 1) + ".txt")))
             {
-                //messageBoxCS.AppendFormat("ダウンロードファイルが存在します。");
-                //messageBoxCS.AppendLine();
 
-
-                DialogResult result = MessageBox.Show("ダウンロード済みです。簡易リーダーで開きますか？",
+                DialogResult result = MessageBox.Show("ファイルが存在しません\nダウンロードしますか？",
                 "確認",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Asterisk,
                 MessageBoxDefaultButton.Button2);
 
+                if (result == DialogResult.Yes)
+                {
+                    await downloadmethod(e.RowIndex + 1, e.RowIndex + 1);
+                    
+                }
+
+
+            }
+            if (File.Exists("Downloads\\" + Title_text.Text + "\\" + ffname + (e.RowIndex + 1) + ".txt"))
+            {
+
+                
+                //messageBoxCS.AppendFormat("ダウンロードファイルが存在します。");
+                //messageBoxCS.AppendLine();
+
+
+                /**
+                DialogResult result = MessageBox.Show("ダウンロード済みです。簡易リーダーで開きますか？",
+                "確認",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Asterisk,
+                MessageBoxDefaultButton.Button2);
+                */
+                var result = DialogResult.Yes;
+
                 //何が選択されたか調べる
                 if (result == DialogResult.Yes)
                 {
                     //「はい」が選択された時
-                    System.Diagnostics.Process.Start("wordpad.exe", @"Downloads\\" + Title_text.Text + "\\" + ffname + (e.RowIndex + 1) + ".txt");
+                    try
+                    {
+                        if (p != null && !(p.HasExited)) p.Kill();
+                    }
+                    catch (Exception)
+                    {
+                        p = null;
+                    }
+                    //"C:\test\1.txt"を関連付けられたアプリケーションで開く
+                    p = System.Diagnostics.Process.Start(@"Downloads\\" + Title_text.Text + "\\" + ffname + (e.RowIndex + 1) + ".txt");
+                    p.EnableRaisingEvents = true;
                     return;
                 }
                 else if (result == DialogResult.No)
@@ -295,20 +329,11 @@ namespace NAROU_downloader
                 else if (result == DialogResult.Cancel)
                 {
                     //「キャンセル」が選択された時
-                    return ;
-                    
+                    return;
+
                 }
-
-
-
             }
-            else
-            {
-                messageBoxCS.AppendFormat("ダウンロードファイルが存在しません。");
-                messageBoxCS.AppendLine();
-                messageBoxCS.AppendLine();
-            }
-            MessageBox.Show(messageBoxCS.ToString(), "");
+            
 
             
         }
