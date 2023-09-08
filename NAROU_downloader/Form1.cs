@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace NAROU_downloader
 {
@@ -32,7 +33,8 @@ namespace NAROU_downloader
             // 指定したサイトのHTMLをストリームで取得する
             var doc = default(IHtmlDocument);
             var client = new HttpClient();
-            if (Regex.IsMatch(urlstring, "ncode")){//なろう陽
+            if (Regex.IsMatch(urlstring, "ncode"))
+            {//なろう陽
                 if (urlstring != "")
                 {
                     urlmode = "narou";
@@ -59,8 +61,8 @@ namespace NAROU_downloader
                     var auther_Text = doc.QuerySelector(".novel_writername");//作者名の抽出
                     Title_text.Text = title;
 
-                    string auther_raw = auther_Text.InnerHtml;
-                    auther_raw = auther_raw.Substring(auther_raw.IndexOf("/\">") + 3, auther_raw.IndexOf("</a>") - auther_raw.IndexOf("/\">") - 3);
+                    string auther_raw = auther_Text.OuterHtml;
+                    auther_raw = auther_raw.Substring(auther_raw.IndexOf("\">") + 6, auther_raw.IndexOf("</div>") - auther_raw.IndexOf("\">") - 6);
                     auther.Text = auther_raw;
                     var wasuu_tmp = doc.QuerySelectorAll(".novel_sublist2");//リストいっこ一戸
                     var kousinji = doc.QuerySelectorAll(".long_update");
@@ -129,6 +131,7 @@ namespace NAROU_downloader
                     //{
                     //    Console.WriteLine(item.GetAttribute("href"));
                     //}
+                    Console.WriteLine(doc);
 
                     for (int i = 0; i < wasuu_tmp.Length; i++)
                     {
@@ -167,6 +170,7 @@ namespace NAROU_downloader
         {
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 1;
+            comboBox3.SelectedIndex = 2;
         }
 
         public class Datas
@@ -196,6 +200,8 @@ namespace NAROU_downloader
                 }
                 Array.Sort(array);
                 progressBar1.Maximum = array.Length ;
+                TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Normal);
+                TaskbarManager.Instance.SetProgressValue(0, progressBar1.Maximum);
                 for (int k = 0; k < array.Length; k++)
                 {
                     await Task.Delay(600);
@@ -205,11 +211,14 @@ namespace NAROU_downloader
                 }
                 await Task.Delay(3200);
                 progressBar1.Value = 0;
+                TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
             }
             if (comboBox2.SelectedIndex == 0)
             {
                 int[] array = new int[Int32.Parse(Wasuu_text.Text)];
                 progressBar1.Maximum = array.Length;
+                TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Normal);
+                TaskbarManager.Instance.SetProgressValue(0, progressBar1.Maximum);
                 for (int i = 0; i < array.Length; i++)
                 {
                     array[i] = i;
@@ -219,6 +228,7 @@ namespace NAROU_downloader
                 await Task.Delay(3200);
 
                 progressBar1.Value = 0;
+                TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
             }
 
 
@@ -315,8 +325,10 @@ namespace NAROU_downloader
                     
                 await Task.Delay(2000);
                 Console.WriteLine(ffname + "OK");
+                string filename = "";
                 WiteFile(honbun,ffname+ String.Format("{0:D3}", syou),comboBox1.SelectedIndex,syou);
                 progressBar1.Value += 1;
+                TaskbarManager.Instance.SetProgressValue(progressBar1.Value, progressBar1.Maximum);
                 
             }
 
@@ -324,7 +336,7 @@ namespace NAROU_downloader
         public void WiteFile(string text,string fname,int enc,int num)
         {
             DirectoryUtils.SafeCreateDirectory("Downloads\\"+Title_text.Text);
-            string enco;
+            string enco="";
             StreamWriter sw;
             if (enc == 0)
             {
@@ -334,12 +346,13 @@ namespace NAROU_downloader
 
             if (enc == 1)
             {
-                enco = "UTF-8";
+                enco = "utf-16";
             }
             int folderno = 1;
             folderno = ((num - 1) -( (num - 1) % 200)+200)/200;
             DirectoryUtils.SafeCreateDirectory("Downloads\\" + Title_text.Text +"\\"+folderno);
-            sw = new StreamWriter("Downloads\\"+Title_text.Text + "\\" + folderno.ToString()+"\\"+ fname + ".txt", false, Encoding.GetEncoding(enc));
+            sw = new StreamWriter("Downloads\\"+Title_text.Text + "\\" + folderno.ToString()+"\\"+ fname + ".txt", false, Encoding.GetEncoding(enco));
+            
             //text.Replace("\n", "\r");
             //string fname = String.Format("{0:D3}", num);
             sw.Write(text);
