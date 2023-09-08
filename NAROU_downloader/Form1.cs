@@ -26,6 +26,7 @@ namespace NAROU_downloader
         }
         public string urlmode = "";
         public string[] kakuyomuno = new string[2048];
+        string[] Commands;
         private async void Button_getlist_Click(object sender, EventArgs e)
         {
             var urlstring = Linkbox.Text;
@@ -171,6 +172,7 @@ namespace NAROU_downloader
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 1;
             comboBox3.SelectedIndex = 2;
+            Commands = System.Environment.GetCommandLineArgs();
         }
 
         public class Datas
@@ -284,6 +286,7 @@ namespace NAROU_downloader
                 }
 
                 string honbun = "";
+                string wamei = "";
                 string ffname = "";
                 // HTMLからtitleタグの値(サイトのタイトルとして表示される部分)を取得する
                 if (urlmode.Equals("narou"))
@@ -292,7 +295,7 @@ namespace NAROU_downloader
                     var midasi = doc.QuerySelector(".novel_subtitle");
                     var Texti = doc.QuerySelectorAll(".novel_view");
                     honbun = midasi.TextContent + "\n\n";
-                    var auther_Text = doc.QuerySelector(".novel_writername");
+                    wamei = midasi.TextContent;
                     ffname = urlstring.Substring(urlstring.IndexOf(".com/") + 5, 7);
                     //var honbun = Texti[0].TextContent;
                     for (int i = 0; i < Texti.Length; i++)
@@ -305,6 +308,7 @@ namespace NAROU_downloader
                 if (urlmode.Equals("kakuyomu"))
                 {
                     var midasi = doc.QuerySelector("#contentMain-header");
+                    wamei = midasi.TextContent;
                     var Texti = doc.QuerySelectorAll(".widget-episode-inner");
                     honbun = midasi.TextContent + "\n\n";
                     var auther_Text = doc.QuerySelector(".novel_writername");
@@ -325,8 +329,24 @@ namespace NAROU_downloader
                     
                 await Task.Delay(2000);
                 Console.WriteLine(ffname + "OK");
-                string filename = "";
-                WiteFile(honbun,ffname+ String.Format("{0:D3}", syou),comboBox1.SelectedIndex,syou);
+                string filename = String.Format("{0:D3}", syou);
+                switch (comboBox3.SelectedIndex)
+                {
+                    case 0:
+                        filename = filename += wamei;
+                        break;
+                    case 1:
+                        filename = wamei;
+                        break;
+                    case 3:
+                        filename = ffname + filename;
+                        break;
+                }
+                string regSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+                Regex rg = new Regex(string.Format("[{0}]", Regex.Escape(regSearch)));
+                filename = rg.Replace(filename, "");
+                Console.WriteLine(filename);
+                WiteFile(honbun,filename,comboBox1.SelectedIndex,syou);
                 progressBar1.Value += 1;
                 TaskbarManager.Instance.SetProgressValue(progressBar1.Value, progressBar1.Maximum);
                 
@@ -381,6 +401,12 @@ namespace NAROU_downloader
                 }
                 return Directory.CreateDirectory(path);
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel1.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://itoho.wjg.jp/physics/Download/Narou_Downloader.html");
         }
     }
 }
